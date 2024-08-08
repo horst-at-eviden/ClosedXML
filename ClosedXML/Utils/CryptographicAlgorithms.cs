@@ -56,12 +56,13 @@ namespace ClosedXML.Utils
 
         public static string GetSalt(int length = 32)
         {
-            using (var random = new RNGCryptoServiceProvider())
-            {
-                var salt = new byte[length];
-                random.GetNonZeroBytes(salt);
-                return Convert.ToBase64String(salt);
-            }
+            throw new NotImplementedException();
+            //using (var random = new RNGCryptoServiceProvider())
+            //{
+            //    var salt = new byte[length];
+            //    random.GetNonZeroBytes(salt);
+            //    return Convert.ToBase64String(salt);
+            //}
         }
 
         public static Boolean RequiresSalt(Algorithm algorithm)
@@ -109,32 +110,33 @@ namespace ClosedXML.Utils
 
         private static String GetSha512PasswordHash(String password, String salt, UInt32 spinCount)
         {
-            if (password == null)
-                throw new ArgumentNullException(nameof(password));
+            throw new NotImplementedException();
+            //if (password == null)
+            //    throw new ArgumentNullException(nameof(password));
 
-            if (salt == null)
-                throw new ArgumentNullException(nameof(salt));
+            //if (salt == null)
+            //    throw new ArgumentNullException(nameof(salt));
 
-            var saltBytes = Convert.FromBase64String(salt);
-            var passwordBytes = Encoding.Unicode.GetBytes(password);
-            var bytes = saltBytes.Concat(passwordBytes).ToArray();
+            //var saltBytes = Convert.FromBase64String(salt);
+            //var passwordBytes = Encoding.Unicode.GetBytes(password);
+            //var bytes = saltBytes.Concat(passwordBytes).ToArray();
 
-            byte[] hashedBytes;
-            using (var hash = new SHA512Managed())
-            {
-                hashedBytes = hash.ComputeHash(bytes);
+            //byte[] hashedBytes;
+            //using (var hash = new SHA512Managed())
+            //{
+            //    hashedBytes = hash.ComputeHash(bytes);
 
-                bytes = new byte[hashedBytes.Length + sizeof(uint)];
-                for (uint i = 0; i < spinCount; i++)
-                {
-                    var le = BitConverter.GetBytes(i);
-                    Array.Copy(hashedBytes, bytes, hashedBytes.Length);
-                    Array.Copy(le, 0, bytes, hashedBytes.Length, le.Length);
-                    hashedBytes = hash.ComputeHash(bytes);
-                }
-            }
+            //    bytes = new byte[hashedBytes.Length + sizeof(uint)];
+            //    for (uint i = 0; i < spinCount; i++)
+            //    {
+            //        var le = BitConverter.GetBytes(i);
+            //        Array.Copy(hashedBytes, bytes, hashedBytes.Length);
+            //        Array.Copy(le, 0, bytes, hashedBytes.Length, le.Length);
+            //        hashedBytes = hash.ComputeHash(bytes);
+            //    }
+            //}
 
-            return Convert.ToBase64String(hashedBytes);
+            //return Convert.ToBase64String(hashedBytes);
         }
     }
 }
